@@ -43,3 +43,8 @@ sgd_clf = SGDClassifier(max_iter=5, random_state=42)
 sgd_clf.fit(X_train, y_train_5)
 
 print(sgd_clf.predict([some_digit])) #결과값 FALSE
+
+# 교차 검증
+from sklearn.model_selection import cross_val_score
+print(cross_val_score(sgd_clf, X_train, y_train_5, cv=3, scoring="accuracy"))
+#about result : 정확도를 분류기의 성능 지표로 선호하지 않음
