@@ -42,11 +42,11 @@ def performance(y_test, y_test_pred, average='binary'):
 #main program
 if __name__ == '__main__':
     # get data
-    mnist = fetch_openml('mnist_784', version=1, as_frame=False)
-    X, y = mnist["data"], mnist["target"]
-    X_train, X_test, y_train, y_test = X[:60000], X[60000:], y[:60000], y[60000:]
-    print(X_train.shape, y_train)
-    print(X_test.shape, y_test)
+    # mnist = fetch_openml('mnist_784', version=1, as_frame=False)
+    # X, y = mnist["data"], mnist["target"]
+    # X_train, X_test, y_train, y_test = X[:60000], X[60000:], y[:60000], y[60000:]
+    # print(X_train.shape, y_train)
+    # print(X_test.shape, y_test)
     
     # OR download https://deepai.org/dataset/mnist
     # unzip it to datasets
@@ -54,52 +54,52 @@ if __name__ == '__main__':
     print(X_train.shape, y_train)
     print(X_test.shape, y_test)
 
-    # bianry classification
+    # # bianry classification
     # 5인지 아닌지를 분류한다.
-    y_train_5 = (y_train == 5) #label이 5라면 TRUE
-    y_test_5 = (y_test == 5)
-    print(y_train)
-    print(y_test)
-    print(y_train_5)
-    print(y_test_5)
+    # y_train_5 = (y_train == 5) #label이 5라면 TRUE
+    # y_test_5 = (y_test == 5)
+    # print(y_train)
+    # print(y_test)
+    # print(y_train_5)
+    # print(y_test_5)
 
-    sgd_clf = SGDClassifier(max_iter=100, tol=1e-3, random_state=42)
-    sgd_clf.fit(X_train, y_train_5) # training
-    y_test_pred = sgd_clf.predict(X_test) # test 
-    # _train으로 훈련한 machine에 test data를 넣어 _pred 반환
+    # sgd_clf = SGDClassifier(max_iter=100, tol=1e-3, random_state=42)
+    # sgd_clf.fit(X_train, y_train_5) # training
+    # y_test_pred = sgd_clf.predict(X_test) # test 
+    # # _train으로 훈련한 machine에 test data를 넣어 _pred 반환
 
-    cm = confusion_matrix(y_test_5, y_test_pred) # 실제 T, F 와 분류기를 통해 예측한 T, F 
-    print("교차검증 혼동행렬 :\n", cm)
+    # cm = confusion_matrix(y_test_5, y_test_pred) # 실제 T, F 와 분류기를 통해 예측한 T, F 
+    # print("교차검증 혼동행렬 :\n", cm)
 
-    precision, recall, f1 = performance(y_test_5, y_test_pred)
-    print(precision, recall, f1)
-    # 교재 92 페이지 참조
-    print("정밀도 :", cm[1, 1] / (cm[0, 1] + cm[1, 1]))
-    print("재현율 :", cm[1, 1] / (cm[1, 0] + cm[1, 1]))
-
-
-    # Multiclass classification (다중 분류기)
-    svm_clf = SVC(gamma="auto", random_state=42)
-    svm_clf.fit(X_train, y_train) # y_train, not y_train_5
-    y_test_pred = svm_clf.predict(X_test)
-    cm = confusion_matrix(y_test, y_test_pred)
-    print("교차검증 혼동행렬 :\n", cm)
-
-    precision, recall, f1 = performance(y_test, y_test_pred, average="micro")
-    print(precision, recall, f1)
+    # precision, recall, f1 = performance(y_test_5, y_test_pred)
+    # print(precision, recall, f1)
+    # # 교재 92 페이지 참조
+    # print("정밀도 :", cm[1, 1] / (cm[0, 1] + cm[1, 1]))
+    # print("재현율 :", cm[1, 1] / (cm[1, 0] + cm[1, 1]))
 
 
-    scaler = StandardScaler()
-    X_train = scaler.fit_transform(X_train.astype(np.float64))
-    X_test  = scaler.fit_transform(X_test.astype(np.float64))
+    # # Multiclass classification (다중 분류기)
+    # svm_clf = SVC(gamma="auto", random_state=42)
+    # svm_clf.fit(X_train, y_train) # y_train, not y_train_5
+    # y_test_pred = svm_clf.predict(X_test)
+    # cm = confusion_matrix(y_test, y_test_pred)
+    # print("교차검증 혼동행렬 :\n", cm)
 
-    svm_clf.fit(X_train, y_train) # y_train, not y_train_5
-    y_test_pred = svm_clf.predict(X_test)
-    cm = confusion_matrix(y_test, y_test_pred)
-    print("교차검증 혼동행렬 :\n", cm)
+    # precision, recall, f1 = performance(y_test, y_test_pred, average="micro")
+    # print(precision, recall, f1)
 
-    precision, recall, f1 = performance(y_test, y_test_pred, average="micro")
-    print(precision, recall, f1)
+
+    # scaler = StandardScaler()
+    # X_train = scaler.fit_transform(X_train.astype(np.float64))
+    # X_test  = scaler.fit_transform(X_test.astype(np.float64))
+
+    # svm_clf.fit(X_train, y_train) # y_train, not y_train_5
+    # y_test_pred = svm_clf.predict(X_test)
+    # cm = confusion_matrix(y_test, y_test_pred)
+    # print("교차검증 혼동행렬 :\n", cm)
+
+    # precision, recall, f1 = performance(y_test, y_test_pred, average="micro")
+    # print(precision, recall, f1)
 
 
     # Multilabel classification
